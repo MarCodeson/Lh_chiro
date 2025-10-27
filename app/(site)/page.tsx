@@ -3,7 +3,7 @@ import { TrustStrip } from '@/components/sections/TrustStrip'
 import { Services } from '@/components/sections/Services'
 import { AboutTeaser } from '@/components/sections/AboutTeaser'
 import { TestimonialsCarousel } from '@/components/sections/TestimonialsCarousel'
-import { ProcessSteps } from '@/components/sections/ProcessSteps'
+import { ProcessTimeline } from '@/components/sections/ProcessTimeline'
 import { Locations } from '@/components/sections/Locations'
 import { ContactForm } from '@/components/sections/ContactForm'
 
@@ -15,7 +15,7 @@ export default function HomePage() {
       <Services />
       <AboutTeaser />
       <TestimonialsCarousel />
-      <ProcessSteps />
+      <ProcessTimeline />
       <Locations />
       <ContactForm />
     </>

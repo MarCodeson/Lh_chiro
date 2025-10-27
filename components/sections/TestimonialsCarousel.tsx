@@ -1,26 +1,30 @@
 'use client'
+
+import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Section } from '@/components/ui/Section'
-
-const DEMO_SLIDES = [
-  { img: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?w=800&q=80&auto=format&fit=crop', quote: '“Les was very professional and helped me understand my issue.”', author: 'J.M., Aberdeen' },
-  { img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80&auto=format&fit=crop', quote: '“Back to work without pain.”', author: 'S.R., Orkney' },
-  { img: 'https://images.unsplash.com/photo-1520975922284-0f4a9f1a0d3b?w=800&q=80&auto=format&fit=crop', quote: '“Clear plan and great care.”', author: 'K.T., Barbados' },
-]
+import { slides } from '@/content/testimonials'
 
 export function TestimonialsCarousel() {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
-  const reduceMotion = useMemo(() => typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
+  const reduceMotion = useMemo(
+    () => typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    []
+  )
   const timer = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     if (paused || reduceMotion) return
-    timer.current = setInterval(() => setIndex((i) => (i + 1) % DEMO_SLIDES.length), 5000)
-    return () => { if (timer.current) clearInterval(timer.current) }
+    timer.current = setInterval(() => setIndex((i) => (i + 1) % slides.length), 5000)
+    return () => {
+      if (timer.current) clearInterval(timer.current)
+    }
   }, [paused, reduceMotion])
 
-  const go = (dir: -1 | 1) => setIndex((i) => (i + dir + DEMO_SLIDES.length) % DEMO_SLIDES.length)
+  const go = (dir: -1 | 1) => setIndex((i) => (i + dir + slides.length) % slides.length)
+
+  const current = slides[index]
 
   return (
     <Section id="testimonials">
@@ -34,23 +38,29 @@ export function TestimonialsCarousel() {
         onMouseLeave={() => setPaused(false)}
       >
         <div className="overflow-hidden rounded-xl">
-          <img src={DEMO_SLIDES[index].img} alt="Patient" className="h-full w-full object-cover" />
+          <Image src={current.img} alt={current.alt} width={800} height={800} className="h-full w-full object-cover" priority={index === 0} />
         </div>
         <div className="flex flex-col">
-          <blockquote className="text-lg">{DEMO_SLIDES[index].quote}</blockquote>
-          <div className="mt-2 text-sm text-neutral-600">{DEMO_SLIDES[index].author}</div>
+          <blockquote className="text-lg">{current.quote}</blockquote>
+          <div className="mt-2 text-sm text-neutral-600">{current.author}</div>
           <div className="mt-auto flex items-center gap-2 pt-6">
-            <button aria-label="Previous" className="btn btn-ghost" onClick={() => go(-1)}>&larr;</button>
-            <button aria-label="Next" className="btn btn-ghost" onClick={() => go(1)}>&rarr;</button>
+            <button aria-label="Previous" className="btn btn-ghost" onClick={() => go(-1)}>
+              &larr;
+            </button>
+            <button aria-label="Next" className="btn btn-ghost" onClick={() => go(1)}>
+              &rarr;
+            </button>
             <button
-              aria-label={paused ? 'Play' : 'Pause'}
+              aria-label={paused ? 'Play testimonials' : 'Pause testimonials'}
               className="btn btn-ghost"
               onClick={() => setPaused((p) => !p)}
-            >{paused ? 'Play' : 'Pause'}</button>
+            >
+              {paused ? 'Play' : 'Pause'}
+            </button>
           </div>
         </div>
       </div>
-      <p className="small mt-2">Demo content. We will transcribe real quotes from the current site for launch.</p>
+      <p className="small mt-2">Testimonials sourced from the previous website. Replace with final approved content before launch.</p>
     </Section>
   )
 }

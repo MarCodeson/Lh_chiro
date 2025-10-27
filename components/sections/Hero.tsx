@@ -9,8 +9,6 @@ export function Hero() {
           <p className="mt-4 text-neutral-700">Structural, metabolic and emotional care with active patient involvement.</p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <a href="#contact" className="btn btn-primary">Request help</a>
-            <a href={`tel:${site.contacts.phoneUK}`} className="btn btn-ghost">Call UK</a>
-            <a href={`tel:${site.contacts.phoneBB}`} className="btn btn-ghost">Call Barbados</a>
           </div>
           <p className="mt-4 text-sm text-neutral-600">Human & Equine Chiropractic · Applied Kinesiology · Neuro Emotional Technique (NET)</p>
           <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-neutral-600">
@@ -20,7 +18,7 @@ export function Hero() {
           </div>
         </div>
         <div className="overflow-hidden rounded-2xl border border-neutral-200 shadow-soft">
-          <img src={site.media.hero} alt="Chiropractic care in clinic" className="h-full w-full object-cover" />
+          <img src={site.media.hero} alt="Chiropractic care in clinic" className="h-[360px] w-full object-cover md:h-[520px]" />
         </div>
       </div>
     </div>
